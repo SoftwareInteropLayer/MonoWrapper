@@ -9,6 +9,8 @@ endif (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_BINARY_DIR} AND NOT 
 
 project(MonoWrapper)
 
+set(TARGET_NAME MonoWrapper)
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
@@ -30,8 +32,8 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/PaladiumLoaderBDS
 )
 
-add_library(${CMAKE_PROJECT_NAME} SHARED ${SRC_FILES})
+add_library(${TARGET_NAME} SHARED ${SRC_FILES})
 
-target_link_libraries(${CMAKE_PROJECT_NAME}
+target_link_libraries(${TARGET_NAME}
     ${MONO_LIBRARIES}
 )
