@@ -12,6 +12,8 @@ namespace Mono {
     template<typename T>
     class FieldInvoker {
     public:
+        explicit FieldInvoker(non_owning_ptr<MonoClassField> field) : _field(field) {}
+
         void setValue(const Object &object, T value) const {
             setValueImpl(&object, std::forward<T>(value));
         }
@@ -21,8 +23,6 @@ namespace Mono {
         }
 
     private:
-        explicit FieldInvoker(non_owning_ptr<MonoClassField> field) : _field(field) {}
-
         void setValueImpl(const Object *object, T value) const {
             auto monoValue = ConvertType<std::decay_t<T>>::toMono(std::forward<T>(value));
             auto arg = toMonoArg(monoValue);
