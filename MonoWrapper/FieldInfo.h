@@ -38,7 +38,7 @@ namespace Mono {
          */
         template<typename RetType>
         RetType getValue(const Object &object) {
-            auto fieldInvoker = Mono::makeFieldInvoker<RetType>(_field);
+            auto fieldInvoker = Mono::makeFieldInvoker<RetType>(*this);
             return fieldInvoker.getValue(object);
         }
 
@@ -50,7 +50,7 @@ namespace Mono {
          */
         template<typename T>
         void setValue(const Object &object, T value) {
-            auto fieldInvoker = Mono::makeFieldInvoker<T>(_field);
+            auto fieldInvoker = Mono::makeFieldInvoker<T>(*this);
             fieldInvoker.setValue(object, value);
         }
 

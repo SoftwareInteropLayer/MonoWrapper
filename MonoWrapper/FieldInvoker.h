@@ -12,7 +12,7 @@ namespace Mono {
     template<typename T>
     class FieldInvoker {
     public:
-        explicit FieldInvoker(non_owning_ptr<MonoClassField> field) : _field(field) {}
+        explicit FieldInvoker(const FieldInfo &field) : _field(field) {}
 
         void setValue(const Object &object, T value) const {
             setValueImpl(&object, std::forward<T>(value));
@@ -28,15 +28,29 @@ namespace Mono {
             auto arg = toMonoArg(monoValue);
 
             MonoObject *obj = object->get();
-            mono_field_set_value(obj, _field, arg);
+            mono_field_set_value(obj, _field.get(), arg);
         }
 
         T getValueImpl(const Object *object) const {
-            throw std::runtime_error("Not implemented");
+            T val{};
+
+            auto arg = reinterpret_cast<void *>(&val);
+            MonoObject *objValue = nullptr;
+            if (!_field.getDeclaringType().isValueType()) {
+                arg = &objValue;
+            }
+
+            MonoObject *obj = object->get();
+            mono_field_get_value(obj, _field.get(), arg);
+
+            if (!_field.getDeclaringType().isValueType() && objValue != nullptr) {
+                val = ConvertType<T>::fromMonoBoxed(objValue);
+            }
+            return val;
         }
 
     protected:
-        non_owning_ptr<MonoClassField> _field;
+        const FieldInfo &_field;
     };
 
     /**
@@ -45,7 +59,7 @@ namespace Mono {
      * @return The FieldInvoker Helper.
      */
     template<typename T>
-    FieldInvoker<T> makeFieldInvoker(non_owning_ptr<MonoClassField> field) {
+    FieldInvoker<T> makeFieldInvoker(const FieldInfo &field) {
         return FieldInvoker<T>(field);
     }
 }

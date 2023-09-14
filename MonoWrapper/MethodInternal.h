@@ -24,6 +24,11 @@ namespace Mono {
         }
     };
 
+    /**
+     * Register internal method call (call C++ function from C#)
+     * @param name Method name
+     * @param func Function
+     */
     template<typename Func>
     inline void registerInternalMethodCall(const std::string &name, Func &&func) {
         mono_add_internal_call(name.c_str(), reinterpret_cast<const void *>(func));
