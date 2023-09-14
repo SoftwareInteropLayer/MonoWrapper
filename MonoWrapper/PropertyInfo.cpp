@@ -18,6 +18,10 @@ PropertyInfo::PropertyInfo(const Type &type, non_owning_ptr<MonoProperty> proper
     }
 }
 
+non_owning_ptr<MonoProperty> PropertyInfo::get() const {
+    return _property;
+}
+
 Object PropertyInfo::getCustomAttribute(const Type &attributeType) {
     auto attributeInfo = mono_custom_attrs_from_property(_declaringType.get(), _property);
     if (attributeInfo == nullptr) {

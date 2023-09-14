@@ -15,6 +15,10 @@ FieldInfo::FieldInfo(const Type &type, non_owning_ptr<MonoClassField> field) : M
     }
 }
 
+non_owning_ptr<MonoClassField> FieldInfo::get() const {
+    return _field;
+}
+
 Object FieldInfo::getCustomAttribute(const Type &attributeType) {
     auto attributeInfo = mono_custom_attrs_from_field(_declaringType.get(), _field);
     if (attributeInfo == nullptr) {

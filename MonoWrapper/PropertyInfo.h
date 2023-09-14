@@ -10,6 +10,12 @@ namespace Mono {
         explicit PropertyInfo(const Type &type, non_owning_ptr<MonoProperty> property);
 
         /**
+         * @brief Get raw MonoProperty pointer.
+         * @return Raw MonoProperty pointer.
+         */
+        non_owning_ptr<MonoProperty> get() const;
+
+        /**
          * @brief Get a specific custom attribute with specified type.
          * @param attributeType Type of attribute to get.
          * @return Custom attribute object.

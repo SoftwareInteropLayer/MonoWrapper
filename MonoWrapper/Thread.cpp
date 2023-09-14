@@ -34,6 +34,10 @@ Thread Thread::attach(const AppDomain &domain) {
     return Thread(threadPtr);
 }
 
+non_owning_ptr<MonoThread> Thread::get() const {
+    return _thread;
+}
+
 void Thread::detach() {
     mono_thread_detach(_thread);
 }

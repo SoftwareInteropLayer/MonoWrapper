@@ -18,6 +18,12 @@ namespace Mono {
 
         static Thread attach(const AppDomain &domain);
 
+        /**
+         * @brief Get raw MonoThread pointer.
+         * @return Raw MonoThread pointer.
+         */
+        non_owning_ptr<MonoThread> get() const;
+
         void detach();
 
     protected:
