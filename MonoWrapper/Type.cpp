@@ -19,6 +19,7 @@ Type::Type(non_owning_ptr<MonoClass> type) : _type(type) {
     _name = mono_class_get_name(_type);
     _namespace = mono_class_get_namespace(_type);
     _fullName = _namespace + "." + _name;
+    _isValueType = mono_class_is_valuetype(_type);
 }
 
 non_owning_ptr<MonoClass> Type::get() const {
@@ -198,6 +199,10 @@ std::vector<PropertyInfo> Type::getProperties() {
         iterProperty = mono_class_get_properties(_type, &iter);
     }
     return properties;
+}
+
+bool Type::isValueType() const {
+    return _isValueType;
 }
 
 bool Type::operator==(const Type &other) const {

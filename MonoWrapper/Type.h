@@ -169,6 +169,8 @@ namespace Mono {
          */
         std::vector<PropertyInfo> getProperties();
 
+        bool isValueType() const;
+
         bool operator==(const Type &other) const;
 
         bool operator!=(const Type &other) const;
@@ -178,5 +180,6 @@ namespace Mono {
         std::string _name;
         std::string _namespace;
         std::string _fullName;
+        bool _isValueType;
     };
 }
