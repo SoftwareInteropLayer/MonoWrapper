@@ -32,7 +32,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/PaladiumLoaderBDS
 )
 
-add_library(${TARGET_NAME} SHARED ${SRC_FILES})
+add_library(${TARGET_NAME} STATIC ${SRC_FILES})
 
 target_link_libraries(${TARGET_NAME}
     ${MONO_LIBRARIES}
