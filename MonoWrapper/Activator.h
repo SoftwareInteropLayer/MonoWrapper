@@ -6,6 +6,7 @@
 
 namespace Mono {
     class Type;
+
     class Object;
 
     class Activator {

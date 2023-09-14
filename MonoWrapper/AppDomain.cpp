@@ -20,12 +20,12 @@ non_owning_ptr<MonoDomain> AppDomain::get() const {
     return _domain;
 }
 
-const AppDomain& AppDomain::getCurrentDomain() {
+const AppDomain &AppDomain::getCurrentDomain() {
     return Thread::getDomain();
 }
 
 AppDomain AppDomain::createDomain(const std::string &friendlyName) {
-    non_owning_ptr<MonoDomain> domain = mono_domain_create_appdomain(const_cast<char*>(friendlyName.c_str()), nullptr);
+    non_owning_ptr<MonoDomain> domain = mono_domain_create_appdomain(const_cast<char *>(friendlyName.c_str()), nullptr);
     if (domain == nullptr) {
         // TODO: Throw exception
     }
@@ -40,7 +40,7 @@ AppDomain AppDomain::createDomain(const std::string &friendlyName) {
 std::vector<Assembly> AppDomain::getAssemblies() const {
     std::vector<Assembly> assemblies;
     assemblies.reserve(_assemblies.size());
-    for (const auto& pair : _assemblies) {
+    for (const auto &pair: _assemblies) {
         assemblies.push_back(pair.second);
     }
     return assemblies;

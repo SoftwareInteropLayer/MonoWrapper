@@ -40,7 +40,8 @@ std::string Type::getFullName() const {
 Object Type::getCustomAttribute(const Type &attributeType) {
     auto attributeInfo = mono_custom_attrs_from_class(_type);
     if (attributeInfo == nullptr) {
-        throw MissingAttributeException("Attribute '" + attributeType.getFullName() + "' not found in class '" + _fullName + "'");
+        throw MissingAttributeException(
+                "Attribute '" + attributeType.getFullName() + "' not found in class '" + _fullName + "'");
     }
 
     auto attributePtr = mono_custom_attrs_get_attr(attributeInfo, attributeType.get());
@@ -76,7 +77,8 @@ MethodInfo Type::getConstructor(int argc) {
 
     auto constructorPtr = mono_class_get_method_from_name(_type, ".ctor", argc);
     if (constructorPtr == nullptr) {
-        throw MissingMethodException("Constructor with " + std::to_string(argc) + " arguments not found in class '" + _fullName + "'");
+        throw MissingMethodException(
+                "Constructor with " + std::to_string(argc) + " arguments not found in class '" + _fullName + "'");
     }
     return MethodInfo(*this, constructorPtr);
 }

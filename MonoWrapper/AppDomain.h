@@ -12,10 +12,13 @@
 
 namespace Mono {
     class Type;
+
     class Object;
 
     class AppDomain {
     public:
+        AppDomain() = default;
+
         explicit AppDomain(non_owning_ptr<MonoDomain> domain);
 
         /**
@@ -28,7 +31,7 @@ namespace Mono {
          * @brief Get current domain.
          * @return Current domain.
          */
-        static const AppDomain& getCurrentDomain();
+        static const AppDomain &getCurrentDomain();
 
         /**
          * @brief Create new domain.

@@ -20,7 +20,7 @@ namespace Mono::Experimental {
          * @return New array.
          * @throws TargetInvocationException If failed to create array.
          */
-        static Array newArray(const Type& type, int size);
+        static Array newArray(const Type &type, int size);
 
         /**
          * @brief Create a new array with specified size. (Type is System.Object)
@@ -43,7 +43,7 @@ namespace Mono::Experimental {
         int count() const;
 
         template<typename T>
-        void set(int index, const T& value) const {
+        void set(int index, const T &value) const {
             if (index < 0 || index >= _count) {
                 throw std::out_of_range("index out of range");
             }

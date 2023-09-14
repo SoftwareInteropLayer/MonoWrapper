@@ -6,7 +6,7 @@
 namespace Mono {
     class FieldInfo : public MemberInfo {
     public:
-        explicit FieldInfo(const Type& type, non_owning_ptr<MonoClassField> field);
+        explicit FieldInfo(const Type &type, non_owning_ptr<MonoClassField> field);
 
         /**
          * @brief Get a specific custom attribute with specified type.

@@ -7,7 +7,7 @@
 namespace Mono {
     class PropertyInfo : public MemberInfo {
     public:
-        explicit PropertyInfo(const Type& type, non_owning_ptr<MonoProperty> property);
+        explicit PropertyInfo(const Type &type, non_owning_ptr<MonoProperty> property);
 
         /**
          * @brief Get a specific custom attribute with specified type.

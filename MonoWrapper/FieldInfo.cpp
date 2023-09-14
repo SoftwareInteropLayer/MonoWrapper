@@ -7,7 +7,9 @@
 
 using namespace Mono;
 
-FieldInfo::FieldInfo(const Type& type, non_owning_ptr<MonoClassField> field) : MemberInfo(type, mono_field_get_name(field)), _field(field) {
+FieldInfo::FieldInfo(const Type &type, non_owning_ptr<MonoClassField> field) : MemberInfo(type,
+                                                                                          mono_field_get_name(field)),
+                                                                               _field(field) {
     if (field == nullptr) {
         throw std::invalid_argument("field cannot be null");
     }
@@ -16,7 +18,9 @@ FieldInfo::FieldInfo(const Type& type, non_owning_ptr<MonoClassField> field) : M
 Object FieldInfo::getCustomAttribute(const Type &attributeType) {
     auto attributeInfo = mono_custom_attrs_from_field(_declaringType.get(), _field);
     if (attributeInfo == nullptr) {
-        throw MissingAttributeException("Attribute '" + attributeType.getFullName() + "' not found for field '" + _name + "' in class '" + _declaringType.getFullName() + "'");
+        throw MissingAttributeException(
+                "Attribute '" + attributeType.getFullName() + "' not found for field '" + _name + "' in class '" +
+                _declaringType.getFullName() + "'");
     }
 
     auto attributePtr = mono_custom_attrs_get_attr(attributeInfo, attributeType.get());

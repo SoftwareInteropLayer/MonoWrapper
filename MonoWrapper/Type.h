@@ -7,12 +7,17 @@
 
 namespace Mono {
     class MethodInfo;
+
     class FieldInfo;
+
     class PropertyInfo;
+
     class Object;
 
     class Type {
     public:
+        Type() = default;
+
         explicit Type(non_owning_ptr<MonoClass> type);
 
         /**
