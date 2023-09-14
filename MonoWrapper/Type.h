@@ -169,6 +169,10 @@ namespace Mono {
          */
         std::vector<PropertyInfo> getProperties();
 
+        /**
+         * @brief Check if this type is value type.
+         * @return True if this type is value type, false otherwise.
+         */
         bool isValueType() const;
 
         bool operator==(const Type &other) const;
