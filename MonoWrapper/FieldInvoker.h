@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TypeConversion.h"
+#include "FieldInfo.h"
 #include <mono/metadata/object.h>
 #include <memory>
 

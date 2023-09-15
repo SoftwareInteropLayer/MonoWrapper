@@ -1,10 +1,15 @@
 #pragma once
 
 #include "MemberInfo.h"
-#include "FieldInvoker.h"
 #include <mono/metadata/object.h>
 
 namespace Mono {
+    template<typename T>
+    class FieldInvoker;
+
+    template<typename T>
+    FieldInvoker<T> makeFieldInvoker(const FieldInfo &field);
+
     class FieldInfo : public MemberInfo {
     public:
         explicit FieldInfo(const Type &type, non_owning_ptr<MonoClassField> field);

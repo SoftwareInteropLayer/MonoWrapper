@@ -1,6 +1,5 @@
 #pragma once
 
-#include "NonOwningPtr.h"
 #include "Type.h"
 #include <string>
 
