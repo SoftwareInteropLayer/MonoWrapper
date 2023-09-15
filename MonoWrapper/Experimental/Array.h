@@ -51,7 +51,7 @@ namespace Mono::Experimental {
          * @return Element at specified index.
          * @throws std::out_of_range If index is out of range.
          */
-        template<typename T, typename = std::enable_if_t<std::is_same_v<T, Object>>>
+        template<typename T>
         T get(std::size_t index) const {
             if (index >= _length) {
                 throw std::out_of_range("index out of range");
@@ -67,7 +67,7 @@ namespace Mono::Experimental {
          * @param value Value to set.
          * @throws std::out_of_range If index is out of range.
          */
-        template<typename T, typename = std::enable_if_t<std::is_same_v<T, Object>>>
+        template<typename T>
         void set(std::size_t index, const T &value) const {
             if (index >= _length) {
                 throw std::out_of_range("index out of range");
