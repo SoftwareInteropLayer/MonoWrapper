@@ -56,8 +56,8 @@ namespace Mono::Experimental {
             if (index >= _length) {
                 throw std::out_of_range("index out of range");
             }
-            auto element = mono_array_get(_array, T, index);
-            return ConvertType<std::decay_t<T>>::fromMono(element);
+            auto element = mono_array_get(_array, MonoObject *, index);
+            return ConvertType<std::decay_t<T>>::fromMonoBoxed(element);
         }
 
         /**
