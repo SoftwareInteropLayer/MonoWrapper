@@ -5,10 +5,12 @@
 #include <mono/metadata/appdomain.h>
 #include <stdexcept>
 
-namespace Mono::Experimental {
+namespace Mono {
     template<typename T>
     struct ConvertType;
+}
 
+namespace Mono::Experimental {
     class Array {
     public:
         explicit Array(non_owning_ptr<MonoArray> array);
