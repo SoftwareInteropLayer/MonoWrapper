@@ -3,7 +3,8 @@
 
 using namespace Mono;
 
-MemberInfo::MemberInfo(const Type& declaringType, const std::string &name) : _declaringType(declaringType), _name(std::move(name)) {
+MemberInfo::MemberInfo(const Type &declaringType, const std::string &name) : _declaringType(declaringType),
+                                                                             _name(std::move(name)) {
 }
 
 std::string MemberInfo::getName() const {

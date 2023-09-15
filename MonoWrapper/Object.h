@@ -7,7 +7,9 @@
 namespace Mono {
     class Object {
     public:
-        explicit Object(const Type& type, non_owning_ptr<MonoObject> object);
+        Object() = default;
+
+        explicit Object(const Type &type, non_owning_ptr<MonoObject> object);
 
         /**
          * @brief Get raw MonoObject pointer.
@@ -19,10 +21,10 @@ namespace Mono {
          * @brief Get type of this object.
          * @return Type of this object.
          */
-        const Type& getType() const;
+        const Type &getType() const;
 
     protected:
-        const Type& _type;
+        Type _type;
         non_owning_ptr<MonoObject> _object = nullptr;
     };
 }

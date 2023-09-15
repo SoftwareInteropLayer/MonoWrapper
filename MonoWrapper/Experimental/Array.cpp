@@ -10,21 +10,21 @@ Array::Array(non_owning_ptr<MonoArray> array) : _array(array) {
         throw std::invalid_argument("array cannot be null");
     }
 
-    _count = (int) mono_array_length(_array);
+    _length = mono_array_length(_array);
 }
 
-Array Array::newArray(const Type &type, int size) {
+Array Array::newArray(const Type &type, std::size_t size) {
     AppDomain domain = Thread::getDomain();
-    auto arrayPtr = mono_array_new(domain.get(), type.get(), static_cast<uintptr_t>(size));
+    auto arrayPtr = mono_array_new(domain.get(), type.get(), size);
     if (arrayPtr == nullptr) {
         throw TargetInvocationException("Failed to create array");
     }
     return Array(arrayPtr);
 }
 
-Array Array::newArray(int size) {
+Array Array::newArray(std::size_t size) {
     AppDomain domain = Thread::getDomain();
-    auto arrayPtr = mono_array_new(domain.get(), mono_get_object_class(), static_cast<uintptr_t>(size));
+    auto arrayPtr = mono_array_new(domain.get(), mono_get_object_class(), size);
     if (arrayPtr == nullptr) {
         throw TargetInvocationException("Failed to create array");
     }
@@ -35,6 +35,6 @@ non_owning_ptr<MonoArray> Array::get() const {
     return _array;
 }
 
-int Array::count() const {
-    return _count;
+std::size_t Array::length() const {
+    return _length;
 }

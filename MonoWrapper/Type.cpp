@@ -19,6 +19,7 @@ Type::Type(non_owning_ptr<MonoClass> type) : _type(type) {
     _name = mono_class_get_name(_type);
     _namespace = mono_class_get_namespace(_type);
     _fullName = _namespace + "." + _name;
+    _isValueType = mono_class_is_valuetype(_type);
 }
 
 non_owning_ptr<MonoClass> Type::get() const {
@@ -40,7 +41,8 @@ std::string Type::getFullName() const {
 Object Type::getCustomAttribute(const Type &attributeType) {
     auto attributeInfo = mono_custom_attrs_from_class(_type);
     if (attributeInfo == nullptr) {
-        throw MissingAttributeException("Attribute '" + attributeType.getFullName() + "' not found in class '" + _fullName + "'");
+        throw MissingAttributeException(
+                "Attribute '" + attributeType.getFullName() + "' not found in class '" + _fullName + "'");
     }
 
     auto attributePtr = mono_custom_attrs_get_attr(attributeInfo, attributeType.get());
@@ -76,7 +78,8 @@ MethodInfo Type::getConstructor(int argc) {
 
     auto constructorPtr = mono_class_get_method_from_name(_type, ".ctor", argc);
     if (constructorPtr == nullptr) {
-        throw MissingMethodException("Constructor with " + std::to_string(argc) + " arguments not found in class '" + _fullName + "'");
+        throw MissingMethodException(
+                "Constructor with " + std::to_string(argc) + " arguments not found in class '" + _fullName + "'");
     }
     return MethodInfo(*this, constructorPtr);
 }
@@ -196,6 +199,10 @@ std::vector<PropertyInfo> Type::getProperties() {
         iterProperty = mono_class_get_properties(_type, &iter);
     }
     return properties;
+}
+
+bool Type::isValueType() const {
+    return _isValueType;
 }
 
 bool Type::operator==(const Type &other) const {

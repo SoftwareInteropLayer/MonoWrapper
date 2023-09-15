@@ -6,17 +6,17 @@
 #include <memory>
 #include <tuple>
 #include <vector>
-#include <iostream>
 
 namespace Mono {
     class Object;
+
     class MethodInfo;
 
     template<typename T>
     class MethodInvoker;
 
     template<typename... Args>
-    class MethodInvoker<void(Args...)>  {
+    class MethodInvoker<void(Args...)> {
     public:
         void operator()(Args... args) {
             invoke(nullptr, std::forward<Args>(args)...);
@@ -27,7 +27,7 @@ namespace Mono {
         }
 
     private:
-        explicit MethodInvoker(const MethodInfo& method) : _method(method) {}
+        explicit MethodInvoker(const MethodInfo &method) : _method(method) {}
 
         void invoke(const Object *object, Args... args) {
             MonoMethod *method = _method.get();
@@ -51,10 +51,10 @@ namespace Mono {
         }
 
         template<typename Signature>
-        friend MethodInvoker<Signature> makeMethodInvoker(const MethodInfo& method);
+        friend MethodInvoker<Signature> makeMethodInvoker(const MethodInfo &method);
 
     protected:
-        const MethodInfo& _method;
+        const MethodInfo &_method;
     };
 
     template<typename RetType, typename... Args>
@@ -69,7 +69,7 @@ namespace Mono {
         }
 
     private:
-        explicit MethodInvoker(const MethodInfo& method) : _method(method) {}
+        explicit MethodInvoker(const MethodInfo &method) : _method(method) {}
 
         RetType invoke(const Object *object, Args... args) {
             MonoMethod *method = _method.get();
@@ -95,10 +95,10 @@ namespace Mono {
         }
 
         template<typename Signature>
-        friend MethodInvoker<Signature> makeMethodInvoker(const MethodInfo& method);
+        friend MethodInvoker<Signature> makeMethodInvoker(const MethodInfo &method);
 
     protected:
-        const MethodInfo& _method;
+        const MethodInfo &_method;
     };
 
     /**
@@ -108,7 +108,7 @@ namespace Mono {
      * @return A MethodInvoker helper.
      */
     template<typename Signature>
-    MethodInvoker<Signature> makeMethodInvoker(const MethodInfo& method) {
+    MethodInvoker<Signature> makeMethodInvoker(const MethodInfo &method) {
         return MethodInvoker<Signature>(method);
     }
 }

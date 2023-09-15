@@ -9,7 +9,7 @@ namespace Mono {
 
     class MethodInfo : public MemberInfo {
     public:
-        explicit MethodInfo(const Type& type, non_owning_ptr<MonoMethod> method);
+        explicit MethodInfo(const Type &type, non_owning_ptr<MonoMethod> method);
 
         /**
          * @brief Get raw MonoMethod pointer.

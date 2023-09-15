@@ -12,10 +12,13 @@
 
 namespace Mono {
     class Type;
+
     class Object;
 
     class AppDomain {
     public:
+        AppDomain() = default;
+
         explicit AppDomain(non_owning_ptr<MonoDomain> domain);
 
         /**
@@ -28,7 +31,7 @@ namespace Mono {
          * @brief Get current domain.
          * @return Current domain.
          */
-        static const AppDomain& getCurrentDomain();
+        static const AppDomain &getCurrentDomain();
 
         /**
          * @brief Create new domain.
@@ -76,6 +79,13 @@ namespace Mono {
             invoker(object, std::forward<Args>(args)...);
             return object;
         }
+
+        /**
+         * @brief Set custom config file.
+         * @param configPath Path to config file.
+         * @throws FileNotFoundException If config file not found.
+         */
+        void setConfig(const std::string &configPath);
 
     private:
         non_owning_ptr<MonoDomain> _domain = nullptr;

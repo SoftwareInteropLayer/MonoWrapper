@@ -7,12 +7,17 @@
 
 namespace Mono {
     class MethodInfo;
+
     class FieldInfo;
+
     class PropertyInfo;
+
     class Object;
 
     class Type {
     public:
+        Type() = default;
+
         explicit Type(non_owning_ptr<MonoClass> type);
 
         /**
@@ -164,6 +169,12 @@ namespace Mono {
          */
         std::vector<PropertyInfo> getProperties();
 
+        /**
+         * @brief Check if this type is value type.
+         * @return True if this type is value type, false otherwise.
+         */
+        bool isValueType() const;
+
         bool operator==(const Type &other) const;
 
         bool operator!=(const Type &other) const;
@@ -173,5 +184,6 @@ namespace Mono {
         std::string _name;
         std::string _namespace;
         std::string _fullName;
+        bool _isValueType;
     };
 }

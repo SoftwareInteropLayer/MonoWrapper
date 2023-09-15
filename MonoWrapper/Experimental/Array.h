@@ -5,10 +5,12 @@
 #include <mono/metadata/appdomain.h>
 #include <stdexcept>
 
-namespace Mono::Experimental {
+namespace Mono {
     template<typename T>
     struct ConvertType;
+}
 
+namespace Mono::Experimental {
     class Array {
     public:
         explicit Array(non_owning_ptr<MonoArray> array);
@@ -20,7 +22,7 @@ namespace Mono::Experimental {
          * @return New array.
          * @throws TargetInvocationException If failed to create array.
          */
-        static Array newArray(const Type& type, int size);
+        static Array newArray(const Type &type, std::size_t size);
 
         /**
          * @brief Create a new array with specified size. (Type is System.Object)
@@ -28,7 +30,7 @@ namespace Mono::Experimental {
          * @return New array.
          * @throws TargetInvocationException If failed to create array.
          */
-        static Array newArray(int size);
+        static Array newArray(std::size_t size);
 
         /**
          * @brief Get raw MonoArray pointer.
@@ -37,14 +39,37 @@ namespace Mono::Experimental {
         non_owning_ptr<MonoArray> get() const;
 
         /**
-         * @brief Get count of elements in array.
-         * @return Count of elements in array.
+         * @brief Get length of this array.
+         * @return Length of this array.
          */
-        int count() const;
+        std::size_t length() const;
 
-        template<typename T>
-        void set(int index, const T& value) const {
-            if (index < 0 || index >= _count) {
+        /**
+         * @brief Get element at specified index. (Only Object type)
+         * @tparam T Type of element.
+         * @param index Index of element.
+         * @return Element at specified index.
+         * @throws std::out_of_range If index is out of range.
+         */
+        template<typename T, typename = std::enable_if_t<std::is_same_v<T, Object>>>
+        T get(std::size_t index) const {
+            if (index >= _length) {
+                throw std::out_of_range("index out of range");
+            }
+            auto element = mono_array_get(_array, T, index);
+            return ConvertType<std::decay_t<T>>::fromMono(element);
+        }
+
+        /**
+         * @brief Set element at specified index. (Only Object type)
+         * @tparam T Type of element.
+         * @param index Index of element.
+         * @param value Value to set.
+         * @throws std::out_of_range If index is out of range.
+         */
+        template<typename T, typename = std::enable_if_t<std::is_same_v<T, Object>>>
+        void set(std::size_t index, const T &value) const {
+            if (index >= _length) {
                 throw std::out_of_range("index out of range");
             }
             auto element = ConvertType<std::decay_t<T>>::toMono(value);
@@ -53,6 +78,6 @@ namespace Mono::Experimental {
 
     protected:
         non_owning_ptr<MonoArray> _array = nullptr;
-        int _count = 0;
+        std::size_t _length = 0;
     };
 }

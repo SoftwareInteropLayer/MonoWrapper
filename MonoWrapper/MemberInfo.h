@@ -1,15 +1,16 @@
 #pragma once
 
-#include "NonOwningPtr.h"
+#include "Type.h"
 #include <string>
 
 namespace Mono {
     class Type;
+
     class Object;
 
     class MemberInfo {
     public:
-        explicit MemberInfo(const Type& declaringType, const std::string &name);
+        explicit MemberInfo(const Type &declaringType, const std::string &name);
 
         /**
          * @brief Get the name of the member.
@@ -21,7 +22,7 @@ namespace Mono {
          * @brief Get the type that this member belongs to.
          * @return Type that this member belongs to.
          */
-        virtual const Type& getDeclaringType() const;
+        virtual const Type &getDeclaringType() const;
 
         /**
          * @brief Get a specific custom attribute with specified type.
@@ -43,7 +44,7 @@ namespace Mono {
         virtual bool operator!=(const MemberInfo &other) const;
 
     protected:
-        const Type& _declaringType;
+        Type _declaringType;
         std::string _name;
     };
 }

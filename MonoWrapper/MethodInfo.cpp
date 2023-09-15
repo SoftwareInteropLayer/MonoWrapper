@@ -6,7 +6,9 @@
 
 using namespace Mono;
 
-MethodInfo::MethodInfo(const Type& type, non_owning_ptr<MonoMethod> method) : MemberInfo(type, mono_method_get_name(method)), _method(method) {
+MethodInfo::MethodInfo(const Type &type, non_owning_ptr<MonoMethod> method) : MemberInfo(type,
+                                                                                         mono_method_get_name(method)),
+                                                                              _method(method) {
     if (_method == nullptr) {
         throw std::invalid_argument("method cannot be null");
     }
@@ -19,7 +21,9 @@ non_owning_ptr<MonoMethod> MethodInfo::get() const {
 Object MethodInfo::getCustomAttribute(const Type &attributeType) {
     auto attributeInfo = mono_custom_attrs_from_method(_method);
     if (attributeInfo == nullptr) {
-        throw MissingAttributeException("Attribute '" + attributeType.getFullName() + "' not found for method '" + _name + "' in class '" + _declaringType.getFullName() + "'");
+        throw MissingAttributeException(
+                "Attribute '" + attributeType.getFullName() + "' not found for method '" + _name + "' in class '" +
+                _declaringType.getFullName() + "'");
     }
 
     auto attributePtr = mono_custom_attrs_get_attr(attributeInfo, attributeType.get());
