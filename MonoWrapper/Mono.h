@@ -1,5 +1,6 @@
 #pragma once
 
+#include "TypeConversion.h"
 #include "Activator.h"
 #include "AppDomain.h"
 #include "Assembly.h"
