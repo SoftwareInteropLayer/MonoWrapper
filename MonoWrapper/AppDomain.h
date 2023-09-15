@@ -80,6 +80,13 @@ namespace Mono {
             return object;
         }
 
+        /**
+         * @brief Set custom config file.
+         * @param configPath Path to config file.
+         * @throws FileNotFoundException If config file not found.
+         */
+        void setConfig(const std::string &configPath);
+
     private:
         non_owning_ptr<MonoDomain> _domain = nullptr;
         mutable std::unordered_map<std::string, Assembly> _assemblies;

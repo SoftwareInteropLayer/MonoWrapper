@@ -67,3 +67,13 @@ Assembly AppDomain::loadAssembly(const std::string &path) {
     _assemblies.emplace(path, assembly);
     return assembly;
 }
+
+void AppDomain::setConfig(const std::string &configPath) {
+    if (!std::filesystem::exists(configPath)) {
+        throw FileNotFoundException("Config file not found: " + configPath);
+    }
+
+    std::string dirPath = configPath.substr(0, configPath.find_last_of("/\\"));
+    std::string fileName = configPath.substr(configPath.find_last_of("/\\") + 1);
+    mono_domain_set_config(_domain, dirPath.c_str(), fileName.c_str());
+}
