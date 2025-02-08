@@ -51,6 +51,8 @@ namespace Mono {
          */
         std::vector<Type> getTypes();
 
+        std::string getName() const;
+
     protected:
         non_owning_ptr<MonoAssembly> _assembly = nullptr;
         non_owning_ptr<MonoImage> _image = nullptr;

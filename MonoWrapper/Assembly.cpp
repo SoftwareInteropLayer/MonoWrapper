@@ -56,3 +56,9 @@ Type Assembly::getType(const std::string &nameSpace, const std::string &name) {
     }
     return Type(type);
 }
+
+std::string Assembly::getName() const {
+    non_owning_ptr<MonoAssemblyName> name = mono_assembly_get_name(_assembly);
+
+    return mono_assembly_name_get_name(name);
+}
